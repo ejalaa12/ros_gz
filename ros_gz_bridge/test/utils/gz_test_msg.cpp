@@ -426,14 +426,17 @@ void compareTestMsg(const std::shared_ptr<gz::msgs::Twist> & _msg)
 
 void createTestMsg(gz::msgs::TwistWithCovariance & _msg)
 {
-  gz::msgs::Vector3d linear_msg;
-  gz::msgs::Vector3d angular_msg;
+  ignition::msgs::Vector3d linear_msg;
+  ignition::msgs::Vector3d angular_msg;
+  ignition::msgs::Header header_msg;
 
   createTestMsg(linear_msg);
   createTestMsg(angular_msg);
+  createTestMsg(header_msg);
 
   _msg.mutable_twist()->mutable_linear()->CopyFrom(linear_msg);
   _msg.mutable_twist()->mutable_angular()->CopyFrom(angular_msg);
+  _msg.mutable_twist()->mutable_header()->CopyFrom(header_msg);
   for (int i = 0; i < 36; i++) {
     _msg.mutable_covariance()->add_data(i);
   }
