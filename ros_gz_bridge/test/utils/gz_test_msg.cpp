@@ -813,14 +813,24 @@ void createTestMsg(gz::msgs::IMU & _msg)
   _msg.mutable_orientation()->CopyFrom(quaternion_msg);
   _msg.mutable_angular_velocity()->CopyFrom(vector3_msg);
   _msg.mutable_linear_acceleration()->CopyFrom(vector3_msg);
+  for (int i = 0; i < 9; i++) {
+    _msg.mutable_orientation_covariance()->add_data(i);
+    _msg.mutable_angular_velocity_covariance()->add_data(i);
+    _msg.mutable_linear_acceleration_covariance()->add_data(i);
+  }
 }
 
 void compareTestMsg(const std::shared_ptr<gz::msgs::IMU> & _msg)
 {
-  compareTestMsg(std::make_shared<gz::msgs::Header>(_msg->header()));
-  compareTestMsg(std::make_shared<gz::msgs::Quaternion>(_msg->orientation()));
-  compareTestMsg(std::make_shared<gz::msgs::Vector3d>(_msg->angular_velocity()));
-  compareTestMsg(std::make_shared<gz::msgs::Vector3d>(_msg->linear_acceleration()));
+  compareTestMsg(std::make_shared<ignition::msgs::Header>(_msg->header()));
+  compareTestMsg(std::make_shared<ignition::msgs::Quaternion>(_msg->orientation()));
+  compareTestMsg(std::make_shared<ignition::msgs::Vector3d>(_msg->angular_velocity()));
+  compareTestMsg(std::make_shared<ignition::msgs::Vector3d>(_msg->linear_acceleration()));
+  for (int i = 0; i < 9; i++) {
+    EXPECT_EQ(_msg->orientation_covariance().data(i), i);
+    EXPECT_EQ(_msg->angular_velocity_covariance().data(i), i);
+    EXPECT_EQ(_msg->linear_acceleration_covariance().data(i), i);
+  }
 }
 
 void createTestMsg(gz::msgs::Axis & _msg)
