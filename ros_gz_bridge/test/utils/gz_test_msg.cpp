@@ -827,9 +827,9 @@ void compareTestMsg(const std::shared_ptr<gz::msgs::IMU> & _msg)
   compareTestMsg(std::make_shared<ignition::msgs::Vector3d>(_msg->angular_velocity()));
   compareTestMsg(std::make_shared<ignition::msgs::Vector3d>(_msg->linear_acceleration()));
   for (int i = 0; i < 9; i++) {
-    EXPECT_EQ(_msg->orientation_covariance().data(i), i);
-    EXPECT_EQ(_msg->angular_velocity_covariance().data(i), i);
-    EXPECT_EQ(_msg->linear_acceleration_covariance().data(i), i);
+    EXPECT_EQ(_msg->orientation_covariance().data(i), i + 1);
+    EXPECT_EQ(_msg->angular_velocity_covariance().data(i), i + 1);
+    EXPECT_EQ(_msg->linear_acceleration_covariance().data(i), i + 1);
   }
 }
 
