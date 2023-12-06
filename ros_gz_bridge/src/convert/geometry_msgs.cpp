@@ -310,7 +310,7 @@ template<>
 void
 convert_ros_to_gz(
   const geometry_msgs::msg::TwistWithCovarianceStamped & ros_msg,
-  ignition::msgs::TwistWithCovariance & gz_msg)
+  gz::msgs::TwistWithCovariance & gz_msg)
 {
   convert_ros_to_gz(ros_msg.header, (*gz_msg.mutable_twist()->mutable_header()));
   convert_ros_to_gz(ros_msg.twist, gz_msg);
@@ -319,7 +319,7 @@ convert_ros_to_gz(
 template<>
 void
 convert_gz_to_ros(
-  const ignition::msgs::TwistWithCovariance & gz_msg,
+  const gz::msgs::TwistWithCovariance & gz_msg,
   geometry_msgs::msg::TwistWithCovarianceStamped & ros_msg)
 {
   convert_gz_to_ros(gz_msg.twist().header(), ros_msg.header);
